@@ -5,9 +5,11 @@ from dateutil import tz,utils
 from datetime import datetime
 
 from beancount.core.number import D
-from beancount.prices import source
+from beanprice import source
 
-
+'''
+需要accesskey
+'''
 class Source(source.Source):
     """
     PYTHONPATH=`pwd`/sources bean-price --no-cache -e CNY:exchangeratesapi/USDCNY
@@ -38,7 +40,7 @@ class Source(source.Source):
             }
         )
         result = resp.json()
-
+        print(result)
         close_price = D(result["rates"][symbol]).quantize(D('1.000000000000000000'))
         trade_date = utils.default_tzinfo(
             datetime.strptime(result["date"], "%Y-%m-%d"),
